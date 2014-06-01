@@ -1,9 +1,10 @@
 import Tkinter as Tk
 
-SIZE = 30
+PACMAN_SIZE = 30
+CANVAS_SIZE = PACMAN_SIZE*20
 DIRECTIONS = dict(zip(["Left", "Right", "Up", "Down"],
-        [(-SIZE, 0, -SIZE, 0), (SIZE, 0, SIZE, 0),
-        (0, -SIZE, 0, -SIZE), (0, SIZE, 0, SIZE)]))
+        [(-PACMAN_SIZE, 0, -PACMAN_SIZE, 0), (PACMAN_SIZE, 0, PACMAN_SIZE, 0),
+        (0, -PACMAN_SIZE, 0, -PACMAN_SIZE), (0, PACMAN_SIZE, 0, PACMAN_SIZE)]))
 
 class App(object):
     def __init__(self, parent):
@@ -14,8 +15,8 @@ class App(object):
         self.title = Tk.Label(self.frame, text="PACMAN", background="Black",
                 foreground="White", font="Courier 32")
         self.title.pack(side=Tk.TOP)
-        self.canvas = Tk.Canvas(self.frame, width=SIZE*20, height=SIZE*20,
-                background="Black")
+        self.canvas = Tk.Canvas(self.frame, width=CANVAS_SIZE,
+                height=CANVAS_SIZE, background="Black")
         self.canvas.pack()
         self.pacman = Pacman(self.canvas)
 
@@ -26,14 +27,19 @@ class App(object):
 class Pacman(object):
     def __init__(self, canvas):
         self.canvas = canvas
-        self.item_id = self.canvas.create_oval(SIZE*10, SIZE*10,
-            SIZE*10+SIZE, SIZE*10+SIZE, fill="Yellow")
+        self.item_id = self.canvas.create_oval(CANVAS_SIZE/2, CANVAS_SIZE/2,
+            CANVAS_SIZE/2 + PACMAN_SIZE, CANVAS_SIZE/2 + PACMAN_SIZE,
+            fill="Yellow")
 
     def coords(self):
         return self.canvas.coords(self.item_id)
 
     def move(self, movement):
-        new_coords = tuple(a + b for a, b in zip(self.coords(), movement))
+        new_coords = tuple(a + b for a, b in
+                zip(self.coords(), movement))
+        # for a, b in zip(self.coords(), movement):
+        #     if a ==
+        # print new_coords
         self.canvas.coords(self.item_id, new_coords)
 
 root = Tk.Tk()
