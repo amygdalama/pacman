@@ -28,7 +28,7 @@ class Pacman(object):
                 fill="Yellow")
 
     def coords(self):
-        return self.canvas.bbox(self.item_id)
+        return self.canvas.coords(self.item_id)
 
     def move(self, movement):
         new_coords = tuple(a + b for a, b in zip(self.coords(), movement))
