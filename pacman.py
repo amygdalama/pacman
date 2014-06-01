@@ -1,7 +1,7 @@
 import Tkinter as Tk
 
 PACMAN_SIZE = 30
-CANVAS_SIZE = PACMAN_SIZE*10
+CANVAS_SIZE = PACMAN_SIZE*3
 DIRECTIONS = dict(zip(["Left", "Right", "Up", "Down"],
         [(-PACMAN_SIZE, 0, -PACMAN_SIZE, 0), (PACMAN_SIZE, 0, PACMAN_SIZE, 0),
         (0, -PACMAN_SIZE, 0, -PACMAN_SIZE), (0, PACMAN_SIZE, 0, PACMAN_SIZE)]))
@@ -29,9 +29,8 @@ class Pacman(object):
     def __init__(self, canvas, maze):
         self.canvas = canvas
         self.maze = maze
-        self.item_id = self.canvas.create_oval(CANVAS_SIZE/2, CANVAS_SIZE/2,
-            CANVAS_SIZE/2 + PACMAN_SIZE, CANVAS_SIZE/2 + PACMAN_SIZE,
-            fill="Yellow")
+        self.item_id = self.canvas.create_oval(PACMAN_SIZE, 0,
+            PACMAN_SIZE*2, PACMAN_SIZE, fill="Yellow")
 
     def coords(self):
         return self.canvas.coords(self.item_id)
@@ -69,6 +68,10 @@ class Maze(object):
             return True
         else:
             return False
+
+    def add_pellets(self):
+        pass
+
 
 if __name__ == '__main__':
     root = Tk.Tk()
