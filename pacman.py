@@ -42,20 +42,30 @@ class Pacman(object):
         new_y = (current_coords[1] + movement[1]) % CANVAS_SIZE
         new_coords = (new_x, new_y, new_x + PACMAN_SIZE,
                 new_y + PACMAN_SIZE)
-        self.canvas.coords(self.item_id, new_coords)
+        if not self.maze.is_wall(new_coords):
+            self.canvas.coords(self.item_id, new_coords)
 
 class Maze(object):
     def __init__(self, canvas):
         self.canvas = canvas
         self.draw_maze(self.canvas)
+        self.walls = self.draw_maze(self.canvas)
 
     def draw_maze(self, canvas):
-        self.canvas.create_line(10, 0, 10, CANVAS_SIZE, fill="Blue",
-                width=5)
+        walls = set()
+        walls.add(self.canvas.create_line(10, 0, 10, CANVAS_SIZE,
+                fill="Blue", width=5))
+        walls.add(self.canvas.create_line(CANVAS_SIZE-10, 0,
+                CANVAS_SIZE-10, CANVAS_SIZE, fill="Blue", width=5))
+        self.canvas.addtag_all("maze")
+        return walls
 
     def is_wall(self, coords):
-        pass
-
+        things = set(self.canvas.find_overlapping(*coords))
+        if things.intersection(self.walls):
+            return True
+        else:
+            return False
 
 root = Tk.Tk()
 app = App(root)
