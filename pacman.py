@@ -14,6 +14,7 @@ class App(object):
         self.canvas = Tk.Canvas(self.frame, width=200, height=200,
                 background="Black")
         self.canvas.pack()
+        self.pacman = self.canvas.create_oval(100, 100, 110, 110, fill="Yellow")
         # self.pacman = Pacman(self.frame)
 
     def key(self, event):
