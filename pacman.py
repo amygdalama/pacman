@@ -1,7 +1,7 @@
 import Tkinter as Tk
 
 PACMAN_SIZE = 30
-CANVAS_SIZE = PACMAN_SIZE*20
+CANVAS_SIZE = PACMAN_SIZE*10
 DIRECTIONS = dict(zip(["Left", "Right", "Up", "Down"],
         [(-PACMAN_SIZE, 0, -PACMAN_SIZE, 0), (PACMAN_SIZE, 0, PACMAN_SIZE, 0),
         (0, -PACMAN_SIZE, 0, -PACMAN_SIZE), (0, PACMAN_SIZE, 0, PACMAN_SIZE)]))
@@ -48,15 +48,18 @@ class Pacman(object):
 class Maze(object):
     def __init__(self, canvas):
         self.canvas = canvas
+        self.line_width = 5
         self.draw_maze(self.canvas)
         self.walls = self.draw_maze(self.canvas)
 
     def draw_maze(self, canvas):
         walls = set()
-        walls.add(self.canvas.create_line(10, 0, 10, CANVAS_SIZE,
+        offset = PACMAN_SIZE-self.line_width
+        walls.add(self.canvas.create_line(offset, 0,
+                offset, CANVAS_SIZE,
                 fill="Blue", width=5))
-        walls.add(self.canvas.create_line(CANVAS_SIZE-10, 0,
-                CANVAS_SIZE-10, CANVAS_SIZE, fill="Blue", width=5))
+        walls.add(self.canvas.create_line(CANVAS_SIZE-offset, 0,
+                CANVAS_SIZE-offset, CANVAS_SIZE, fill="Blue", width=5))
         self.canvas.addtag_all("maze")
         return walls
 
