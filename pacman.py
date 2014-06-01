@@ -35,11 +35,11 @@ class Pacman(object):
         return self.canvas.coords(self.item_id)
 
     def move(self, movement):
-        new_coords = tuple(a + b for a, b in
-                zip(self.coords(), movement))
-        # for a, b in zip(self.coords(), movement):
-        #     if a ==
-        # print new_coords
+        current_coords = self.coords()
+        new_x = (current_coords[0] + movement[0]) % CANVAS_SIZE
+        new_y = (current_coords[1] + movement[1]) % CANVAS_SIZE
+        new_coords = (new_x, new_y, new_x + PACMAN_SIZE,
+                new_y + PACMAN_SIZE)
         self.canvas.coords(self.item_id, new_coords)
 
 root = Tk.Tk()
