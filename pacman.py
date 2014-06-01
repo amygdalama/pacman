@@ -70,6 +70,7 @@ class Maze(object):
         else:
             return False
 
-root = Tk.Tk()
-app = App(root)
-root.mainloop()
+if __name__ == '__main__':
+    root = Tk.Tk()
+    app = App(root)
+    root.mainloop()
