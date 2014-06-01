@@ -1,7 +1,7 @@
 import Tkinter as Tk
 
 DIRECTIONS = dict(zip(["Left", "Right", "Up", "Down"],
-        [(-10, 0, -10, 0), (10, 0, 10, 0), (0, 10, 0, 10), (0, -10, 0, -10)]))
+        [(-10, 0, -10, 0), (10, 0, 10, 0), (0, -10, 0, -10), (0, 10, 0, 10)]))
 
 class App(object):
     def __init__(self, parent):
