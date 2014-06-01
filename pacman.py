@@ -33,7 +33,6 @@ class Pacman(object):
     def move(self, movement):
         new_coords = tuple(a + b for a, b in zip(self.coords(), movement))
         self.canvas.coords(self.item_id, new_coords)
-        print "Pacman moved!"
 
 root = Tk.Tk()
 app = App(root)
