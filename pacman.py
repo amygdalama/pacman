@@ -18,15 +18,17 @@ class App(object):
         self.canvas = Tk.Canvas(self.frame, width=CANVAS_SIZE,
                 height=CANVAS_SIZE, background="Black")
         self.canvas.pack()
-        self.pacman = Pacman(self.canvas)
+        self.maze = Maze(self.canvas)
+        self.pacman = Pacman(self.canvas, self.maze)
 
     def key(self, event):
         if event.keysym in DIRECTIONS:
             self.pacman.move(DIRECTIONS[event.keysym])
 
 class Pacman(object):
-    def __init__(self, canvas):
+    def __init__(self, canvas, maze):
         self.canvas = canvas
+        self.maze = maze
         self.item_id = self.canvas.create_oval(CANVAS_SIZE/2, CANVAS_SIZE/2,
             CANVAS_SIZE/2 + PACMAN_SIZE, CANVAS_SIZE/2 + PACMAN_SIZE,
             fill="Yellow")
@@ -41,6 +43,19 @@ class Pacman(object):
         new_coords = (new_x, new_y, new_x + PACMAN_SIZE,
                 new_y + PACMAN_SIZE)
         self.canvas.coords(self.item_id, new_coords)
+
+class Maze(object):
+    def __init__(self, canvas):
+        self.canvas = canvas
+        self.draw_maze(self.canvas)
+
+    def draw_maze(self, canvas):
+        self.canvas.create_line(10, 0, 10, CANVAS_SIZE, fill="Blue",
+                width=5)
+
+    def is_wall(self, coords):
+        pass
+
 
 root = Tk.Tk()
 app = App(root)
