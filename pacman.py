@@ -43,15 +43,16 @@ class Pacman(object):
                 new_y + PACMAN_SIZE)
         if not self.maze.is_wall(new_coords):
             self.canvas.coords(self.item_id, new_coords)
+        self.maze.eat_pellets(new_coords)
 
 class Maze(object):
     def __init__(self, canvas):
         self.canvas = canvas
         self.line_width = 5
-        self.draw_maze(self.canvas)
-        self.walls = self.draw_maze(self.canvas)
+        self.walls = self.draw_walls(self.canvas)
+        self.pellets = self.add_pellets()
 
-    def draw_maze(self, canvas):
+    def draw_walls(self, canvas):
         walls = set()
         offset = PACMAN_SIZE-self.line_width
         walls.add(self.canvas.create_line(offset, 0,
@@ -59,7 +60,7 @@ class Maze(object):
                 fill="Blue", width=5))
         walls.add(self.canvas.create_line(CANVAS_SIZE-offset, 0,
                 CANVAS_SIZE-offset, CANVAS_SIZE, fill="Blue", width=5))
-        self.canvas.addtag_all("maze")
+        self.canvas.addtag_all("wall")
         return walls
 
     def is_wall(self, coords):
@@ -70,7 +71,21 @@ class Maze(object):
             return False
 
     def add_pellets(self):
-        pass
+        pellets = set()
+        for i in xrange(0, 3):
+            y1 = PACMAN_SIZE*.5 + i*PACMAN_SIZE
+            y2 = y1 + .5*PACMAN_SIZE
+            pellet = self.canvas.create_oval(PACMAN_SIZE*1.25,
+                    y1, PACMAN_SIZE*1.75, y2, fill="White")
+            pellets.add(pellet)
+            self.canvas.itemconfig(pellet, tags="pellet")
+        return pellets
+
+    def eat_pellets(self, coords):
+        things = set(self.canvas.find_overlapping(*coords))
+        pellets = things.intersection(self.pellets)
+        for pellet in pellets:
+            self.canvas.delete(pellet)
 
 
 if __name__ == '__main__':
